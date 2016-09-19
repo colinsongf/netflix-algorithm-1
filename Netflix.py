@@ -64,6 +64,7 @@ def get_rmse() :
     count = 0
     actual_ratings = load(open('/u/downing/cs/netflix-cs373/cat3238-actual.p', 'rb'))
     for movie_id in predicted_ratings:
+        print (str(movie_id))
         for customer_id in predicted_ratings[movie_id]:
             predicted_rating = predicted_ratings[movie_id][customer_id]
             actual_rating = actual_ratings[movie_id][int(customer_id)]
