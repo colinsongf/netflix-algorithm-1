@@ -16,10 +16,10 @@ before_script:
     - uname -a
     - printenv | sort
     - make versions
-    - sudo mkdir -p /u/downing/public_html/netflix-cs373/
-    - sudo wget -P /u/downing/public_html/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/mjx63_actual_ratings.p"
-    - sudo wget -P /u/downing/public_html/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/jic539_movie_avg.p"
-    - sudo wget -P /u/downing/public_html/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/jic539_cust_avg.p"
+    - sudo mkdir -p /u/downing/cs/netflix-cs373/
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/u/downing/netflix-cs373/mjx63_actual_ratings.p"
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/brb2727-movie_avg.p"
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/brb2727-cust_avg.p"
 
 script:
     - date
