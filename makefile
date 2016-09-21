@@ -43,7 +43,7 @@ endif
 .pylintrc:
 	$(PYLINT) --disable=locally-disabled --reports=no --generate-rcfile > $@
 
-netflix-tests:
+Netflix-tests:
 	git clone https://github.com/cs373g-fall-2016/netflix-tests.git
 
 Netflix.html: Netflix.py
