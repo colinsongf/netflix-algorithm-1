@@ -1,0 +1,27 @@
+language: python
+
+python:
+   - "3.5"
+
+before_install:
+    - pip install --upgrade pip
+
+install:
+    - pip install autopep8
+    - pip install coverage
+    - pip install numpy
+    - pip install pylint
+
+before_script:
+    - uname -a
+    - printenv | sort
+    - make versions
+    - sudo mkdir -p /u/downing/cs/netflix-cs373/
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/cat3238-actual.p"
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/brb2727-movie_avg.p"
+    - sudo wget -P /u/downing/cs/netflix-cs373/ "http://www.cs.utexas.edu/users/downing/netflix-cs373/brb2727-cust_avg.p"
+
+script:
+    - date
+    - ls -al
+    - make test
