@@ -5,8 +5,10 @@ from pickle import load
 #Global int to keep track of current movie
 current_movie = 0
 
+movie_averages = load(open('/u/downing/cs/netflix-cs373/brb2727-movie_avg.p', 'rb'))
+cust_averages = load(open('/u/downing/cs/netflix-cs373/brb2727-cust_avg.p', 'rb'))
+
 predicted_ratings = {}
-current_movie_list = {}
 
 # -------------
 # netflix_read
@@ -18,11 +20,7 @@ def netflix_read(line) :
     line = line.split()
     if ':' in line[0] :
         global current_movie
-        global current_movie_list
         movie_id = line[0].replace(':','')
-        if current_movie_list:
-            predicted_ratings[current_movie] = current_movie_list
-        current_movie_list = {}
         current_movie = int(movie_id)
         return line[0]
     else :
@@ -33,9 +31,8 @@ def netflix_read(line) :
 # -------------
 def netflix_eval(data) :
 
-    movie_averages = load(open('/u/downing/cs/netflix-cs373/brb2727-movie_avg.p', 'rb'))
-    cust_averages = load(open('/u/downing/cs/netflix-cs373/brb2727-cust_avg.p', 'rb'))
-    total_average = 3.2281371945000967 #credit to Carlos for posting on piazza
+    #total_average = 3.2281371945000967 #credit to Carlos for posting on piazza
+    total_average = 3.7
 
     value = total_average + (movie_averages[int(current_movie)] - total_average)+(cust_averages[int(data)] - total_average)
 
@@ -60,19 +57,17 @@ def netflix_print(output, data, rating) :
 # -------------      
 def get_rmse() :
     global predicted_ratings
-    sum = 0
+    sumval = 0
     count = 0
     actual_ratings = load(open('/u/downing/cs/netflix-cs373/cat3238-actual.p', 'rb'))
-    for movie_id in predicted_ratings:
-        print (str(movie_id))
-        for customer_id in predicted_ratings[movie_id]:
-            predicted_rating = predicted_ratings[movie_id][customer_id]
-            actual_rating = actual_ratings[movie_id][int(customer_id)]
-            if actual_rating:
-                sqr_err = (actual_rating - predicted_rating) **2
-                sum += sqr_err
-                count += 1
-    avg = sum / count
+    for movie_rating in predicted_ratings :
+        actual_rating = actual_ratings[int(movie_rating[0])][int(movie_rating[1])]
+        predicted_rating = predicted_ratings[movie_rating]
+        if actual_rating:
+            sqr_err = (actual_rating - predicted_rating) **2
+            sumval += sqr_err
+            count += 1
+    avg = sumval / count
     return avg ** 0.5
 
 # -------------
@@ -87,12 +82,11 @@ def netflix_solve (input, output) :
     for line in input :
         data = netflix_read(line)
         rating = -1
-        if ':' not in data :
+        if ':' not in data : #if there's no colon, then the line represents a customer
             rating = netflix_eval(data)
-            global current_movie_list
-            current_movie_list[data] = rating
+            global predicted_ratings
+            key = (current_movie, data)
+            predicted_ratings[key] = rating
         netflix_print(output, data, rating)
-    global predicted_ratings
-    predicted_ratings[current_movie] = current_movie_list
     RMSE = get_rmse()
     output.write("RMSE: "+ str(round(RMSE, 2)))
