@@ -66,7 +66,6 @@ def get_rmse() :
             sqr_err = (actual_rating - predicted_rating) **2
             sumval += sqr_err
             count += 1
-    actual_ratings.close
     avg = sumval / count
     return avg ** 0.5
 
