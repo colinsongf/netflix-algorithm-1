@@ -31,7 +31,6 @@ def netflix_read(line) :
 # -------------
 def netflix_eval(data) :
 
-    #total_average = 3.2281371945000967 #credit to Carlos for posting on piazza
     total_average = 3.7
 
     value = total_average + (movie_averages[int(current_movie)] - total_average)+(cust_averages[int(data)] - total_average)
@@ -67,6 +66,7 @@ def get_rmse() :
             sqr_err = (actual_rating - predicted_rating) **2
             sumval += sqr_err
             count += 1
+    actual_ratings.close
     avg = sumval / count
     return avg ** 0.5
 
