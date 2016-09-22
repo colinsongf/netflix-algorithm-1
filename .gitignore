@@ -1,0 +1,13 @@
+__pycache__
+.coverage
+.DS_Store
+.pylintrc
+*.pyc
+Netflix-tests
+Netflix.html
+Netflix.log
+CS373.bbprojectd
+Icon?
+RunNetflix.tmp
+TestNetflix.tmp
+tests
